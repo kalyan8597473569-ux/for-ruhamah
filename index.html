@@ -5,23 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>For the one with the sweetest smile ❤️</title>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
 :root{
-  /* New, richer color palette */
   --bg1:#ffe0f0; --bg2:#f7b7cf;
   --accent1:#e57399; --accent2:#cc507e;
   --card:#fff7fb; --muted:#7d6a71;
   --title-color:#8b455d; 
 }
-/* New Keyframes for the Pulse Animation */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 @keyframes softPulse {
   0% { transform: scale(1); box-shadow: 0 15px 40px rgba(0,0,0,.12); }
   50% { transform: scale(1.005); box-shadow: 0 16px 45px rgba(0,0,0,.15); } 
   100% { transform: scale(1); box-shadow: 0 15px 40px rgba(0,0,0,.12); }
 }
-
 html,body{
   height:100%; margin:0;
   font-family:system-ui, sans-serif;
@@ -36,18 +38,12 @@ html,body{
   text-align:center;
   display:flex; flex-direction:column; gap:14px;
   transition:all .4s ease-in-out;
-  animation: softPulse 4s infinite ease-in-out;
+  animation: softPulse 4s infinite ease-in-out, slideIn 0.5s ease-out; 
 }
-#step0 {
-  animation: none;
-  box-shadow:0 15px 40px rgba(0,0,0,.12);
-}
-
+#step0 { animation: none; box-shadow:0 15px 40px rgba(0,0,0,.12); }
 .hidden{display:none}
-/* ENHANCED: Text shadow and weight for titles */
 h1,h2{
-  margin:0;
-  color:var(--title-color);
+  margin:0; color:var(--title-color);
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
   font-weight: 800; 
 }
@@ -60,44 +56,32 @@ h1,h2{
   font-weight:700;cursor:pointer;
   transition:transform .2s;
 }
-.btn:hover{
-  transform:scale(1.03);
-}
+.btn:hover{ transform:scale(1.03); }
 input,textarea{
   width:100%;padding:12px;
   border-radius:10px;border:1px solid #e0e0e0;
-  transition: border-color 0.3s, box-shadow 0.3s;
 }
-/* ENHANCED: Input focus state */
-input:focus,textarea:focus{
-  outline: none;
-  border: 1px solid var(--accent1); 
-  box-shadow: 0 0 5px rgba(229, 115, 153, 0.3);
-}
-
+#nameInput { text-align: center; font-size: 1.2em; font-weight: 700; }
 textarea{min-height:80px}
 .countdown{display:flex;gap:12px;justify-content:center}
 .cd{
-  background:#fff;
-  padding:10px 12px;
-  border-radius:12px;
-  min-width:55px;
+  background:#fff; padding:10px 12px;
+  border-radius:12px; min-width:55px;
   box-shadow:inset 0 2px 4px rgba(0,0,0,.1);
 }
 .cd div{font-size:1.4em;font-weight:bold;color:var(--accent2)}
 
-/* ENHANCED: Photo floating effect */
+/* UPDATED PHOTO STYLING FOR CENTERING */
 .photo{
-  width:180px;height:180px;
-  border-radius:14px;object-fit:cover;
+  width:220px; height:220px; /* Made slightly larger */
+  border-radius:14px; object-fit:cover;
   box-shadow:0 10px 24px rgba(0,0,0,.06);
-  transform: rotate(-2deg); /* Initial slight rotation */
+  display: block; /* Required for centering */
+  margin: 10px auto; /* Centers horizontally and adds vertical space */
+  transform: rotate(-2deg);
   transition: transform 0.3s, box-shadow 0.3s;
 }
-.photo:hover {
-  transform: rotate(0deg) scale(1.05); /* Straighten and scale up on hover */
-  box-shadow: 0 15px 30px rgba(0,0,0,.15);
-}
+.photo:hover { transform: rotate(0deg) scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,.15); }
 
 .gifts{display:flex;gap:12px;justify-content:center}
 .gift{
@@ -106,135 +90,125 @@ textarea{min-height:80px}
   border-radius:14px;
   display:flex;align-items:center;justify-content:center;
   font-size:26px;cursor:pointer;
-  transition:all .3s;
   animation: softPulse 3s infinite ease-in-out;
 }
-.gift:hover{transform:translateY(-3px);box-shadow:0 4px 8px rgba(0,0,0,.1)}
 .gift.hide{opacity:0;pointer-events:none}
-
-/* NEW: Style for the final, important message box */
 .final-message {
   padding: 15px;
   border: 2px dashed var(--accent1); 
   border-radius: 12px;
   background: #ffe8f2; 
   line-height: 1.6;
-  margin-top: 10px;
 }
 </style>
 </head>
-
 <body>
 
 <div id="step0" class="panel">
-<h1>The Grand Countdown</h1>
+<h1><i class="fas fa-calendar-day"></i> The Grand Countdown</h1>
 <p class="muted">Your special message unlocks on **December 28th** 🎂</p>
-
 <div class="countdown">
   <div class="cd"><div id="d">0</div>days</div>
   <div class="cd"><div id="h">0</div>hrs</div>
   <div class="cd"><div id="m">0</div>min</div>
   <div class="cd"><div id="s">0</div>sec</div>
 </div>
-
 <p id="locked" class="small">Come back on Dec 28 ❤️</p>
 <button id="openNow" class="btn hidden">Unlock Your Surprise 🎉</button>
 <p class="small">(tap anywhere 7 times for admin access)</p>
 </div>
 
 <div id="step1" class="panel hidden">
-<h1>Identify Yourself 🗝️</h1>
-<input id="nameInput" placeholder="Type your name">
+<h1><i class="fas fa-key"></i> Identify Yourself</h1>
+<p class="small">Enter your name to unlock.</p>
+<input id="nameInput" placeholder="Who is this?">
 <p id="nameHint" class="small"></p>
 <button id="nameBtn" class="btn">Continue</button>
 </div>
 
 <div id="step2" class="panel hidden">
-<h2>Hello, My Dear Ruhamah 👋</h2>
+<h2>Hello, My Dear Ruhh <i class="fas fa-hand-sparkles"></i></h2>
 <p class="muted">This little corner of the internet was made just for you.</p>
 <button class="btn" onclick="show('step3')">Read My Message</button>
 </div>
 
 <div id="step3" class="panel hidden">
-<h2>A Few Words...</h2>
+<h2><i class="fas fa-envelope-open-text"></i> A Few Words...</h2>
 <p class="muted">Before we proceed, allow me a brief moment from the heart.</p>
 <button class="btn" onclick="show('step4')">Continue</button>
 </div>
 
 <div id="step4" class="panel hidden">
-<h2>My Favorite Things About You (A Complete List)</h2>
-<p style="white-space:pre-wrap;color:var(--muted)">
-I've compiled a short list of things I absolutely adore about you—the simple and the complex:
-</p>
-<div style="white-space:pre-wrap;color:var(--title-color);font-size:16px;font-weight:600; text-align:left; padding-left:20px; display:flex; flex-direction:column; gap:10px;">
+<h2><i class="fas fa-heart-circle-check"></i> My Favorite Things</h2>
+<div style="white-space:pre-wrap;color:var(--title-color);font-size:15px;font-weight:600; text-align:left; padding-left:10px; display:flex; flex-direction:column; gap:8px;">
 * The thoughtful way you talk.
 * The effortless sound of your laugh.
-* Your simple, sweet smile that stops me in my tracks.
-* The beautiful mind and command of English that keeps me on my toes.
+* Your sweet smile that stops me in my tracks.
+* Your beautiful mind and how you're so good at English.
 <br>
 * **The fact that I always lose to you,** because losing to you truly feels like winning.
 <br>
-* **The fire in you when you become angry**—it shows your passion and honesty.
-* **Even the way you nag**—because it shows how much you care about the details.
+* **The fire in you when you're angry** (it's honesty).
+* **Even the way you nag**—because I know you care.
 <br>
-* **In short, I cherish every single part of you.**
+* **I cherish every single part of you.**
 </div>
 <button class="btn" onclick="show('step5')">View Memory Album 📸</button>
 </div>
 
 <div id="step5" class="panel hidden">
-<h2>A Trip Down Memory Lane</h2>
-<p class="muted">Here are a few moments we’ve shared that I cherish.</p>
-<button class="btn" onclick="loadPhoto('step5a', 'birthday-photo-1.jpg', 'The unforgettable evening you visited. This is my favorite view in the world.')">See Memory 1</button>
+<h2><i class="fas fa-book-open"></i> A Trip Down Memory Lane</h2>
+<p class="muted">A few moments I cherish deeply.</p>
+<button class="btn" onclick="loadPhoto('step5a', 'birthday-photo-1.jpeg', 'That evening you visited. This is my favorite view in the world.')">See Memory 1</button>
 </div>
 
 <div id="step5a" class="panel hidden">
 <h2>Memory 1/3</h2>
 <img id="photo-5a" class="photo" style="display:none">
-<p id="photoMsg-5a" class="small">Loading your special moment…</p>
+<p id="photoMsg-5a" class="small">Loading special moment…</p>
 <p id="caption-5a" class="muted"></p>
-<button class="btn" onclick="loadPhoto('step5b', 'birthday-photo-2.jpg', 'The video call where you looked like a straight-up gangster. Still beautiful.')">Next Memory</button>
+<button class="btn" onclick="loadPhoto('step5b', 'birthday-photo-2.jpeg', 'The video call where you looked like a total gangster. Still beautiful.')">Next Memory</button>
 </div>
 
 <div id="step5b" class="panel hidden">
 <h2>Memory 2/3</h2>
 <img id="photo-5b" class="photo" style="display:none">
-<p id="photoMsg-5b" class="small">Loading your special moment…</p>
+<p id="photoMsg-5b" class="small">Loading special moment…</p>
 <p id="caption-5b" class="muted"></p>
-<button class="btn" onclick="loadPhoto('step5c', 'birthday-photo-3.jpg', 'Just a simple moment that proves why I always look forward to talking to you.')">Last Memory</button>
+<button class="btn" onclick="loadPhoto('step5c', 'birthday-photo-3.jpeg', 'Just another reason why I love talking to you every day.')">Last Memory</button>
 </div>
 
 <div id="step5c" class="panel hidden">
 <h2>Memory 3/3</h2>
 <img id="photo-5c" class="photo" style="display:none">
-<p id="photoMsg-5c" class="small">Loading your special moment…</p>
+<p id="photoMsg-5c" class="small">Loading special moment…</p>
 <p id="caption-5c" class="muted"></p>
 <button class="btn" onclick="show('step6')">Time for Your Wish!</button>
 </div>
 
 <div id="step6" class="panel hidden">
-<h2>Your Birthday Wish ✨</h2>
-<p class="muted">Make your wish, and feel free to leave a private note.</p>
-<textarea id="wish" placeholder="Your wish for the year ahead..."></textarea>
-<textarea id="note" placeholder="Your note (private, optional)"></textarea>
+<h2><i class="fas fa-wand-magic-sparkles"></i> Your Birthday Wish</h2>
+<p class="muted">Make your wish here, Ruhh.</p>
+<textarea id="wish" placeholder="Your wish..."></textarea>
+<textarea id="note" placeholder="Your note (optional)"></textarea>
 <button class="btn" id="save">Save Your Wish</button>
 </div>
 
 <div id="step6_5" class="panel hidden">
-<h2>And finally...</h2>
+<h2><i class="fas fa-gifts"></i> And finally...</h2>
 <div class="final-message">
   <p style="white-space:pre-wrap;color:var(--title-color);font-size:17px;font-weight:600; margin:0;">
-    **Happy Birthday, My Sweet Ruhamah.**
-    You possess a beautiful mind and a wit sharper than mine.
-    Here’s to celebrating this beautiful day, and countless others, by your side.
+    **Happy Birthday, My Sweet Ruhh.**
+    You possess a beautiful mind and a wit sharper than mine. 
+    Celebrating this day by your side is my favorite win.
   </p>
 </div>
-<button class="btn" onclick="show('step7')">Reveal My Gift To You 🎁</button>
+<button class="btn" onclick="show('step7')">Reveal My Gift 🎁</button>
 </div>
 
 <div id="step7" class="panel hidden">
 <h2>My Gift To You 🎁</h2>
-<p class="muted">Tap one beautiful box to reveal your surprise invitation!</p>
+<p class="muted">Tap a box to reveal your invitation!</p>
 <div class="gifts">
   <div class="gift">🎁</div>
   <div class="gift">🎁</div>
@@ -244,129 +218,69 @@ I've compiled a short list of things I absolutely adore about you—the simple a
 </div>
 
 <script>
-/* CONFIG */
-const NAME="Ruhamah";
-const ADMIN_PASS="R28-OnlyForUs-2025";
-const TARGET_MONTH=11, TARGET_DAY=28;
+const VALID_INPUTS = ["ruhh", "ruhamah"];
+const ADMIN_PASS = "R28-OnlyForUs-2025";
+const TARGET_MONTH = 11, TARGET_DAY = 28;
 
-/* helpers */
-const el=id=>document.getElementById(id);
-const show=id=>{
-  document.querySelectorAll('.panel').forEach(p=>p.classList.add('hidden'));
+const el = id => document.getElementById(id);
+const show = id => {
+  document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
   el(id).classList.remove('hidden');
 };
-const confettiBurst=()=>confetti({particleCount:150,spread:90,origin:{y:0.6}}); 
+const confettiBurst = () => confetti({particleCount:150,spread:90,origin:{y:0.6}}); 
 
-/* New function to load photo dynamically */
 function loadPhoto(stepId, filename, captionText) {
     show(stepId);
-    // Use stepId slice to get the relevant photo/message/caption ID (e.g., '5a' from 'step5a')
     const suffix = stepId.slice(4); 
-    const imgEl = el('photo-' + suffix);
-    const msgEl = el('photoMsg-' + suffix);
-    const captionEl = el('caption-' + suffix);
-
-    imgEl.style.display = 'none';
-    msgEl.style.display = 'block';
-    msgEl.textContent = 'Loading your special moment…';
-
+    const imgEl = el('photo-' + suffix), msgEl = el('photoMsg-' + suffix), captionEl = el('caption-' + suffix);
+    imgEl.style.display = 'none'; msgEl.style.display = 'block';
     imgEl.src = "birthday/" + filename;
-    
-    imgEl.onload = () => {
-        imgEl.style.display = 'block';
-        msgEl.style.display = 'none';
-        captionEl.textContent = captionText;
-    };
-    imgEl.onerror = () => {
-        msgEl.textContent = "Error loading photo: " + filename + ". Please check file path.";
-        captionEl.textContent = captionText; // Display caption even if photo fails
-    };
+    imgEl.onload = () => { imgEl.style.display = 'block'; msgEl.style.display = 'none'; captionEl.textContent = captionText; };
+    imgEl.onerror = () => { msgEl.textContent = "Photo error. Check folder 'birthday' for " + filename; captionEl.textContent = captionText; };
 }
 
-
-/* countdown */
 function tick(){
-  const now=new Date();
-  const t=new Date(now.getFullYear(),TARGET_MONTH,TARGET_DAY);
-  // If the target date has passed for the current year, set it for the next year
+  const now = new Date(), t = new Date(now.getFullYear(), TARGET_MONTH, TARGET_DAY);
   if (t < now) t.setFullYear(t.getFullYear() + 1);
-  
-  const diff=Math.max(0,(t-now)/1000);
-  el('d').textContent=Math.floor(diff/86400);
-  el('h').textContent=Math.floor(diff%86400/3600);
-  el('m').textContent=Math.floor(diff%3600/60);
-  el('s').textContent=Math.floor(diff%60);
-  
-  // Check if today is the day
-  if(now.getMonth()==TARGET_MONTH && now.getDate()==TARGET_DAY){
-    el('openNow').classList.remove('hidden');
-    el('locked').classList.add('hidden');
-  }
+  const diff = Math.max(0, (t - now) / 1000);
+  el('d').textContent = Math.floor(diff / 86400); el('h').textContent = Math.floor(diff % 86400 / 3600);
+  el('m').textContent = Math.floor(diff % 3600 / 60); el('s').textContent = Math.floor(diff % 60);
+  if(now.getMonth() == TARGET_MONTH && now.getDate() == TARGET_DAY){ el('openNow').classList.remove('hidden'); el('locked').classList.add('hidden'); }
 }
-setInterval(tick,1000); tick();
+setInterval(tick, 1000); tick();
 
-/* ===== ADMIN OVERRIDE (STABLE) ===== */
-let adminTaps=0, adminTimer=null;
-el('step0').addEventListener('click',()=>{
+let adminTaps = 0;
+el('step0').addEventListener('click', () => {
   adminTaps++;
-  if(adminTimer) clearTimeout(adminTimer);
-  adminTimer=setTimeout(()=>adminTaps=0,4000);
-  if(adminTaps>=7){
-    adminTaps=0; clearTimeout(adminTimer);
-    const code=prompt("Enter admin password:");
-    if(code===ADMIN_PASS){
-      confettiBurst();
-      show('step1');
-    } else {
-      alert("Access Denied.");
-    }
+  setTimeout(() => adminTaps = 0, 4000);
+  if(adminTaps >= 7){
+    if(prompt("Admin Password:") === ADMIN_PASS){ confettiBurst(); show('step1'); }
   }
 });
 
-el('openNow').onclick=()=>show('step1');
+el('openNow').onclick = () => show('step1');
 
-/* name check */
-el('nameBtn').onclick=()=>{
-  if(el('nameInput').value.trim().toLowerCase()!=NAME.toLowerCase()){
-    el('nameHint').textContent="That doesn't seem right. Try again! 🧐"; return;
+el('nameBtn').onclick = () => {
+  const userInput = el('nameInput').value.trim().toLowerCase();
+  if(!VALID_INPUTS.includes(userInput)){ 
+    el('nameHint').textContent = "That's not what I call you! 🧐"; 
+    return; 
   }
-  el('step2').querySelector('h2').textContent=`Hello, My Dear ${NAME} 👋`;
-  confettiBurst(); show('step2');
+  confettiBurst(); 
+  show('step2');
 };
 
+el('save').onclick = () => { if(!wish.value) return alert("Make a wish!"); confettiBurst(); show('step6_5'); };
 
-/* save wish */
-el('save').onclick=()=>{
-  if(!wish.value) return alert("Please type your birthday wish!");
-  sessionStorage.setItem('wish',wish.value);
-  sessionStorage.setItem('note',note.value);
-  confettiBurst();
-  show('step6_5');
-};
-
-/* gifts */
-document.querySelectorAll('.gift').forEach(g=>{
-  g.onclick=()=>{
-    document.querySelectorAll('.gift').forEach(x=>x.classList.add('hide'));
+document.querySelectorAll('.gift').forEach(g => {
+  g.onclick = () => {
+    document.querySelectorAll('.gift').forEach(x => x.classList.add('hide'));
     g.classList.remove('hide');
-    // UPDATED INVITATION TEXT WITH THE JOKE
-    el('result').innerHTML=`
-    <p style="font-size:16px;line-height:1.5;">
-    <b>The Grand Invitation ❤️</b><br>
-    Join me for a special evening at:<br>
-    **Tourist Cafe, Dalgaon Viewpoint**<br>
-    **Time:** 6:30 – 7:00 PM<br>
-    <br>
-    <span style="font-style:italic; color:var(--title-color);">
-    (P.S. I invited you, so you treat me. It's only fair!)
-    </span>
-    </p>`;
+    el('result').innerHTML = `<p style="font-size:16px;"><b>Dinner Invitation ❤️</b><br>Tourist Cafe, Dalgaon Viewpoint<br>6:30 – 7:00 PM<br><br><i>(P.S. Since I invited you, the treat is on you! Fair deal?)</i></p>`;
     confettiBurst();
   };
 });
-
 show('step0');
 </script>
-
 </body>
 </html>
