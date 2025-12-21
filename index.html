@@ -25,206 +25,203 @@
   100% { transform: scale(1); box-shadow: 0 15px 40px rgba(0,0,0,.12); }
 }
 html,body{
-  height:100%; margin:0;
+  min-height:100%; margin:0;
   font-family:system-ui, sans-serif;
   background:linear-gradient(135deg,var(--bg1),var(--bg2));
   display:flex; align-items:center; justify-content:center;
-  overflow: hidden;
+  padding: 20px 0;
 }
 
 .panel{
-  width:calc(100% - 40px); max-width:400px;
+  width: 90%; 
+  max-width: 500px; /* Increased from 400px to prevent narrow look */
   background:var(--card);
-  border-radius:18px;
-  padding:25px;
+  border-radius:22px;
+  padding:30px;
   text-align:center;
-  display:flex; flex-direction:column; gap:14px;
-  transition:all .4s ease-in-out;
-  animation: softPulse 4s infinite ease-in-out, slideIn 0.5s ease-out;
+  display:flex; flex-direction:column; gap:18px;
+  transition: all 0.3s ease;
+  animation: slideIn 0.5s ease-out;
   box-sizing: border-box;
-  z-index: 10;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
 }
-#step0 { animation: none; box-shadow:0 15px 40px rgba(0,0,0,.12); }
+
 .hidden{display:none}
 h1,h2{
   margin:0; color:var(--title-color);
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
-  font-weight: 800; 
+  font-weight: 800; line-height: 1.2;
 }
-.muted{color:var(--muted);font-size:15px}
+.muted{color:var(--muted);font-size:15px; line-height: 1.5;}
 .small{font-size:13px;color:var(--muted)}
+
 .btn{
   background:linear-gradient(135deg,var(--accent1),var(--accent2));
-  color:#fff;border:none;
-  padding:14px 22px;border-radius:999px;
-  font-weight:700;cursor:pointer;
+  color:#fff; border:none;
+  padding:15px 25px; border-radius:999px;
+  font-weight:700; cursor:pointer;
   transition:transform .2s;
   width: fit-content; align-self: center;
+  margin-top: 10px;
 }
-.btn:hover{ transform:scale(1.03); }
+.btn:hover{ transform:scale(1.05); }
 
 input, textarea {
-  width: 100%; padding: 12px;
-  border-radius: 10px; border: 1px solid #e0e0e0;
+  width: 100%; padding: 14px;
+  border-radius: 12px; border: 1.5px solid #f0e0e8;
   box-sizing: border-box; font-family: inherit; text-align: center;
+  background: #fff;
 }
-#nameInput { font-size: 1.1em; font-weight: 700; }
-textarea { min-height: 80px; resize: none; }
 
-.countdown{display:flex;gap:12px;justify-content:center}
-.cd{
-  background:#fff; padding:10px 12px;
-  border-radius:12px; min-width:55px;
-  box-shadow:inset 0 2px 4px rgba(0,0,0,.1);
+/* PHOTO FIXES */
+.photo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
 }
-.cd div{font-size:1.4em;font-weight:bold;color:var(--accent2)}
-
 .photo{
-  width:220px; height:220px;
-  border-radius:14px; object-fit:cover;
-  box-shadow:0 10px 24px rgba(0,0,0,.06);
-  display: block; margin: 10px auto;
-  transform: rotate(-2deg);
-  transition: transform 0.3s, box-shadow 0.3s;
+  max-width: 100%; /* Ensures it never goes out of the border */
+  height: auto;
+  max-height: 350px;
+  border-radius: 15px;
+  object-fit: contain;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  border: 5px solid white;
 }
-.photo:hover { transform: rotate(0deg) scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,.15); }
 
-.gifts{display:flex;gap:12px;justify-content:center}
-.gift{
-  width:85px;height:105px;
-  background:linear-gradient(#fff,#ffe8f2);
-  border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:26px;cursor:pointer;
-  animation: softPulse 3s infinite ease-in-out;
+/* VIDEO BOX */
+#bdayVideo {
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  margin-bottom: 10px;
 }
-.gift.hide{opacity:0;pointer-events:none}
+
+.countdown{display:flex; gap:10px; justify-content:center; flex-wrap: wrap;}
+.cd{
+  background:#fff; padding:12px;
+  border-radius:14px; min-width:65px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.cd div{font-size:1.5em; font-weight:bold; color:var(--accent2)}
+
 .final-message {
-  padding: 15px;
+  padding: 20px;
   border: 2px dashed var(--accent1); 
-  border-radius: 12px;
-  background: #ffe8f2; 
+  border-radius: 15px;
+  background: #fff0f6; 
   line-height: 1.6;
 }
 </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop>
+<audio id="bgMusic">
   <source src="song.mp3" type="audio/mpeg">
 </audio>
 
 <div id="step0" class="panel">
-<h1><i class="fas fa-calendar-day"></i> The Grand Countdown</h1>
-<p class="muted">Your special message unlocks on **December 28th** 🎂</p>
-<div class="countdown">
-  <div class="cd"><div id="d">0</div>days</div>
-  <div class="cd"><div id="h">0</div>hrs</div>
-  <div class="cd"><div id="m">0</div>min</div>
-  <div class="cd"><div id="s">0</div>sec</div>
-</div>
-<p id="locked" class="small">Come back on Dec 28 ❤️</p>
-<button id="openNow" class="btn hidden">Unlock Your Surprise 🎉</button>
-<p class="small">(tap anywhere 7 times for admin access)</p>
+  <h1><i class="fas fa-calendar-day"></i> The Grand Countdown</h1>
+  <div class="countdown">
+    <div class="cd"><div id="d">0</div>days</div>
+    <div class="cd"><div id="h">0</div>hrs</div>
+    <div class="cd"><div id="m">0</div>min</div>
+    <div class="cd"><div id="s">0</div>sec</div>
+  </div>
+  <p id="locked" class="muted">Unlocking on December 28th ❤️</p>
+  <button id="openNow" class="btn hidden">Unlock Your Surprise 🎉</button>
+  <p class="small">(Tap 7 times for admin access)</p>
 </div>
 
 <div id="step1" class="panel hidden">
-<h1><i class="fas fa-key"></i> Identify Yourself</h1>
-<p class="small">Enter your name to unlock.</p>
-<input id="nameInput" placeholder="Who is this?">
-<p id="nameHint" class="small"></p>
-<button id="nameBtn" class="btn">Continue</button>
+  <h1><i class="fas fa-key"></i> Identify Yourself</h1>
+  <p class="muted">Enter the name I call you by.</p>
+  <input id="nameInput" placeholder="Enter name here...">
+  <p id="nameHint" class="small"></p>
+  <button id="nameBtn" class="btn">Continue</button>
 </div>
 
 <div id="step2" class="panel hidden">
-<h2>Hello, My Dear Ruhh <i class="fas fa-hand-sparkles"></i></h2>
-<p class="muted">This little corner of the internet was made just for you.</p>
-<button class="btn" onclick="show('step3')">Read My Message</button>
+  <h2>Hello, My Dear Ruhh <i class="fas fa-hand-sparkles"></i></h2>
+  <p class="muted">This corner of the internet belongs to you today.</p>
+  <button class="btn" onclick="show('step3')">Read My Message</button>
 </div>
 
 <div id="step3" class="panel hidden">
-<h2><i class="fas fa-envelope-open-text"></i> A Few Words...</h2>
-<p class="muted">Before we proceed, allow me a brief moment from the heart.</p>
-<button class="btn" onclick="show('step4')">Continue</button>
+  <h2><i class="fas fa-envelope-open-text"></i> From My Heart...</h2>
+  <p class="muted">I wanted to take a moment to tell you how much you mean to me.</p>
+  <button class="btn" onclick="show('step4')">Continue</button>
 </div>
 
 <div id="step4" class="panel hidden">
-<h2><i class="fas fa-heart-circle-check"></i> My Favorite Things</h2>
-<div style="white-space:pre-wrap;color:var(--title-color);font-size:15px;font-weight:600; text-align:left; padding-left:10px; display:flex; flex-direction:column; gap:8px;">
+  <h2><i class="fas fa-heart-circle-check"></i> My Favorite Things</h2>
+  <div style="white-space:pre-wrap; color:var(--title-color); font-size:16px; font-weight:600; text-align:left; padding: 10px; display:flex; flex-direction:column; gap:12px;">
 * The thoughtful way you talk. 💬
-* The effortless sound of your laugh. 😂
-* Your sweet smile that stops me in my tracks. ✨
-* Your beautiful mind and how you're so good at English. 📚
+* Your effortless laugh. 😂
+* Your sweet smile that stops me. ✨
+* Your beautiful mind. 📚
 <br>
-* **The fact that I always lose to you...** 🏳️ because losing to you truly feels like winning anyway. 🏆 (And let's be honest, I can't win against you even if I tried! 🤡)
-<br>
-* **The fire in you when you're angry** 🔥 (it's honesty).
-* **Even the way you nag** 🗣️ — because I know you care.
-<br>
-* **I cherish every single part of you.** ❤️
-</div>
-<button class="btn" onclick="show('step5')">View Memory Album 📸</button>
+* **I always lose to you...** 🏳️ because losing to you feels like winning. (And let's be real, I can't win anyway! 🤡)
+  </div>
+  <button class="btn" onclick="show('step5')">View Memory Album 📸</button>
 </div>
 
 <div id="step5" class="panel hidden">
-<h2><i class="fas fa-book-open"></i> A Trip Down Memory Lane</h2>
-<p class="muted">A few moments I cherish deeply.</p>
-<button class="btn" onclick="loadPhoto('step5a', 'birthday-photo-1.jpeg', 'That evening you visited. This is my favorite view in the world.')">See Memory 1</button>
+  <h2><i class="fas fa-book-open"></i> Memory Album</h2>
+  <p class="muted">Just a few moments I keep close to my heart.</p>
+  <button class="btn" onclick="loadPhoto('step5a', 'birthday-photo-1.jpeg', 'My favorite view.')">See Memory 1</button>
 </div>
 
 <div id="step5a" class="panel hidden">
-<h2>Memory 1/3</h2>
-<img id="photo-5a" class="photo" style="display:none">
-<p id="photoMsg-5a" class="small">Loading special moment…</p>
-<p id="caption-5a" class="muted"></p>
-<button class="btn" onclick="loadPhoto('step5b', 'birthday-photo-2.jpeg', 'The video call where you looked like a total gangster. Still beautiful.')">Next Memory</button>
+  <h2>Memory 1/3</h2>
+  <div class="photo-container"><img id="photo-5a" class="photo" style="display:none"></div>
+  <p id="photoMsg-5a" class="small">Loading...</p>
+  <p id="caption-5a" class="muted"></p>
+  <button class="btn" onclick="loadPhoto('step5b', 'birthday-photo-2.jpeg', 'You looked like a total gangster here.')">Next Memory</button>
 </div>
 
 <div id="step5b" class="panel hidden">
-<h2>Memory 2/3</h2>
-<img id="photo-5b" class="photo" style="display:none">
-<p id="photoMsg-5b" class="small">Loading special moment…</p>
-<p id="caption-5b" class="muted"></p>
-<button class="btn" onclick="loadPhoto('step5c', 'birthday-photo-3.jpeg', 'Just another reason why I love talking to you every day.')">Last Memory</button>
+  <h2>Memory 2/3</h2>
+  <div class="photo-container"><img id="photo-5b" class="photo" style="display:none"></div>
+  <p id="photoMsg-5b" class="small">Loading...</p>
+  <p id="caption-5b" class="muted"></p>
+  <button class="btn" onclick="loadPhoto('step5c', 'birthday-photo-3.jpeg', 'Just another reason I love you.')">Last Memory</button>
 </div>
 
 <div id="step5c" class="panel hidden">
-<h2>Memory 3/3</h2>
-<img id="photo-5c" class="photo" style="display:none">
-<p id="photoMsg-5c" class="small">Loading special moment…</p>
-<p id="caption-5c" class="muted"></p>
-<button class="btn" onclick="show('step6')">Time for Your Wish!</button>
+  <h2>Memory 3/3</h2>
+  <div class="photo-container"><img id="photo-5c" class="photo" style="display:none"></div>
+  <p id="photoMsg-5c" class="small">Loading...</p>
+  <p id="caption-5c" class="muted"></p>
+  <button class="btn" onclick="show('step6')">Make a Wish!</button>
 </div>
 
 <div id="step6" class="panel hidden">
-<h2><i class="fas fa-wand-magic-sparkles"></i> Your Birthday Wish</h2>
-<p class="muted">Make your wish here, Ruhh.</p>
-<textarea id="wish" placeholder="Your wish..."></textarea>
-<textarea id="note" placeholder="Your note (optional)"></textarea>
-<button class="btn" id="save">Save Your Wish</button>
+  <h2><i class="fas fa-wand-magic-sparkles"></i> Your Birthday Wish</h2>
+  <textarea id="wish" placeholder="Type your wish..."></textarea>
+  <textarea id="note" placeholder="Any note for me?"></textarea>
+  <button class="btn" id="save">Save Your Wish</button>
 </div>
 
 <div id="step6_5" class="panel hidden">
-<h2><i class="fas fa-gifts"></i> And finally...</h2>
-<div class="final-message">
-  <p style="white-space:pre-wrap;color:var(--title-color);font-size:17px;font-weight:600; margin:0;">
-    **Happy Birthday, My Sweet Ruhh.** 🎂
-    You possess a beautiful mind and a wit sharper than mine. 
-    Celebrating this day by your side is my favorite win. 💖
-  </p>
-</div>
-<button class="btn" onclick="show('step7')">Reveal My Gift 🎁</button>
+  <h2>Happy Birthday, Ruhh! 🎂</h2>
+  <video id="bdayVideo" playsinline>
+    <source src="birthday-video.mp4" type="video/mp4">
+  </video>
+  <div class="final-message">
+    <p style="color:var(--title-color); font-size:16px; font-weight:600; margin:0;">
+      May your year be as beautiful as your mind. 💖
+    </p>
+  </div>
+  <button class="btn" onclick="show('step7')">Reveal My Gift 🎁</button>
 </div>
 
 <div id="step7" class="panel hidden">
-<h2>My Gift To You 🎁</h2>
-<p class="muted">Tap a box to reveal your invitation!</p>
-<div class="gifts">
-  <div class="gift">🎁</div>
-  <div class="gift">🎁</div>
-  <div class="gift">🎁</div>
-</div>
-<div id="result"></div>
+  <h2>My Gift To You 🎁</h2>
+  <div style="display:flex; gap:10px; justify-content:center;">
+    <div class="btn" onclick="revealGift()">🎁 Open Gift</div>
+  </div>
+  <div id="result" style="margin-top:15px;"></div>
 </div>
 
 <script>
@@ -236,10 +233,10 @@ const el = id => document.getElementById(id);
 const show = id => {
   document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
   el(id).classList.remove('hidden');
+  window.scrollTo(0, 0);
 };
-const confettiBurst = () => {
-    confetti({particleCount:150,spread:90,origin:{y:0.6}});
-};
+
+const confettiBurst = () => confetti({particleCount:150,spread:70,origin:{y:0.6}}); 
 
 function loadPhoto(stepId, filename, captionText) {
     show(stepId);
@@ -248,7 +245,7 @@ function loadPhoto(stepId, filename, captionText) {
     imgEl.style.display = 'none'; msgEl.style.display = 'block';
     imgEl.src = "birthday/" + filename;
     imgEl.onload = () => { imgEl.style.display = 'block'; msgEl.style.display = 'none'; captionEl.textContent = captionText; };
-    imgEl.onerror = () => { msgEl.textContent = "Photo error. Check folder 'birthday' for " + filename; captionEl.textContent = captionText; };
+    imgEl.onerror = () => { msgEl.textContent = "Photo error. Check folder 'birthday'"; };
 }
 
 function tick(){
@@ -271,76 +268,26 @@ el('step0').addEventListener('click', () => {
 });
 
 el('openNow').onclick = () => show('step1');
-
 el('nameBtn').onclick = () => {
-  const userInput = el('nameInput').value.trim().toLowerCase();
-  if(!VALID_INPUTS.includes(userInput)){ 
-    el('nameHint').textContent = "That's not what I call you! 🧐"; 
-    return; 
-  }
-  confettiBurst(); 
-  show('step2');
+  if(VALID_INPUTS.includes(el('nameInput').value.trim().toLowerCase())){
+    confettiBurst(); show('step2');
+  } else { el('nameHint').textContent = "That's not the name I use! 🧐"; }
 };
 
-// MUSIC TRIGGER ON BIRTHDAY GREETING
 el('save').onclick = () => { 
-  if(!wish.value) return alert("Make a wish!"); 
-  
-  // Start Music
-  const music = el('bgMusic');
-  music.play().catch(e => console.log("User must click for audio"));
-  
-  // Continuous confetti for the big reveal
-  var end = Date.now() + (3 * 1000);
-  (function frame() {
-    confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
-    confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
-    if (Date.now() < end) { requestAnimationFrame(frame); }
-  }());
-
+  if(!el('wish').value) return alert("Make a wish first!");
+  el('bgMusic').play();
+  el('bdayVideo').play();
+  confettiBurst();
   show('step6_5'); 
 };
 
-document.querySelectorAll('.gift').forEach(g => {
-  g.onclick = () => {
-    document.querySelectorAll('.gift').forEach(x => x.classList.add('hide'));
-    g.classList.remove('hide');
-    el('result').innerHTML = `<p style="font-size:16px;"><b>Dinner Invitation ❤️</b><br>Tourist Cafe, Dalgaon Viewpoint<br>6:30 – 7:00 PM<br><br><i>(P.S. Since I invited you, the treat is on you! Fair deal? 😉)</i></p>`;
-    confettiBurst();
-  };
-});
+function revealGift() {
+  el('result').innerHTML = `<div class="final-message"><b>Dinner Invitation ❤️</b><br>Tourist Cafe, Dalgaon Viewpoint<br>6:30 – 7:00 PM<br><br><i>(P.S. Since I invited you, the treat is on you! Fair deal? 😉)</i></div>`;
+  confettiBurst();
+}
+
 show('step0');
 </script>
 </body>
 </html>
-<audio id="bgMusic" preload="auto" loop>
-  <source src="song.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-// Find the el('save').onclick section in your code and replace it with this:
-el('save').onclick = () => { 
-  if(!wish.value) return alert("Make a wish!"); 
-  
-  const music = el('bgMusic');
-  
-  // Try to play and catch errors
-  music.play().then(() => {
-    console.log("Music started successfully!");
-  }).catch(e => {
-    console.error("Music failed to play:", e);
-    // If it fails, we try one more time on the NEXT click
-  });
-  
-  // Big Confetti Reveal
-  var end = Date.now() + (3 * 1000);
-  (function frame() {
-    confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
-    confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
-    if (Date.now() < end) { requestAnimationFrame(frame); }
-  }());
-
-  show('step6_5'); 
-};
-</script>
-
