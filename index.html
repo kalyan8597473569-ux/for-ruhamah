@@ -313,3 +313,34 @@ show('step0');
 </script>
 </body>
 </html>
+<audio id="bgMusic" preload="auto" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Find the el('save').onclick section in your code and replace it with this:
+el('save').onclick = () => { 
+  if(!wish.value) return alert("Make a wish!"); 
+  
+  const music = el('bgMusic');
+  
+  // Try to play and catch errors
+  music.play().then(() => {
+    console.log("Music started successfully!");
+  }).catch(e => {
+    console.error("Music failed to play:", e);
+    // If it fails, we try one more time on the NEXT click
+  });
+  
+  // Big Confetti Reveal
+  var end = Date.now() + (3 * 1000);
+  (function frame() {
+    confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+    confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+    if (Date.now() < end) { requestAnimationFrame(frame); }
+  }());
+
+  show('step6_5'); 
+};
+</script>
+
