@@ -31,14 +31,15 @@ html,body{
   display:flex; align-items:center; justify-content:center;
 }
 .panel{
-  width:calc(100% - 24px); max-width:420px;
+  width:calc(100% - 40px); max-width:400px;
   background:var(--card);
   border-radius:18px;
-  padding:20px;
+  padding:25px;
   text-align:center;
   display:flex; flex-direction:column; gap:14px;
   transition:all .4s ease-in-out;
-  animation: softPulse 4s infinite ease-in-out, slideIn 0.5s ease-out; 
+  animation: softPulse 4s infinite ease-in-out, slideIn 0.5s ease-out;
+  box-sizing: border-box; /* Fixes the "tilt" by including padding in width */
 }
 #step0 { animation: none; box-shadow:0 15px 40px rgba(0,0,0,.12); }
 .hidden{display:none}
@@ -55,14 +56,23 @@ h1,h2{
   padding:14px 22px;border-radius:999px;
   font-weight:700;cursor:pointer;
   transition:transform .2s;
+  width: fit-content; align-self: center; /* Centers the button */
 }
 .btn:hover{ transform:scale(1.03); }
-input,textarea{
-  width:100%;padding:12px;
-  border-radius:10px;border:1px solid #e0e0e0;
+
+/* FIXED CENTERED INPUTS */
+input, textarea {
+  width: 100%; 
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box; /* This prevents the right-tilt */
+  font-family: inherit;
+  text-align: center; /* Centers text inside boxes */
 }
-#nameInput { text-align: center; font-size: 1.2em; font-weight: 700; }
-textarea{min-height:80px}
+#nameInput { font-size: 1.1em; font-weight: 700; }
+textarea { min-height: 80px; resize: none; }
+
 .countdown{display:flex;gap:12px;justify-content:center}
 .cd{
   background:#fff; padding:10px 12px;
@@ -70,19 +80,16 @@ textarea{min-height:80px}
   box-shadow:inset 0 2px 4px rgba(0,0,0,.1);
 }
 .cd div{font-size:1.4em;font-weight:bold;color:var(--accent2)}
-
-/* UPDATED PHOTO STYLING FOR CENTERING */
 .photo{
-  width:220px; height:220px; /* Made slightly larger */
+  width:220px; height:220px;
   border-radius:14px; object-fit:cover;
   box-shadow:0 10px 24px rgba(0,0,0,.06);
-  display: block; /* Required for centering */
-  margin: 10px auto; /* Centers horizontally and adds vertical space */
+  display: block;
+  margin: 10px auto;
   transform: rotate(-2deg);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 .photo:hover { transform: rotate(0deg) scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,.15); }
-
 .gifts{display:flex;gap:12px;justify-content:center}
 .gift{
   width:85px;height:105px;
@@ -141,17 +148,17 @@ textarea{min-height:80px}
 <div id="step4" class="panel hidden">
 <h2><i class="fas fa-heart-circle-check"></i> My Favorite Things</h2>
 <div style="white-space:pre-wrap;color:var(--title-color);font-size:15px;font-weight:600; text-align:left; padding-left:10px; display:flex; flex-direction:column; gap:8px;">
-* The thoughtful way you talk.
-* The effortless sound of your laugh.
-* Your sweet smile that stops me in my tracks.
-* Your beautiful mind and how you're so good at English.
+* The thoughtful way you talk. 💬
+* The effortless sound of your laugh. 😂
+* Your sweet smile that stops me in my tracks. ✨
+* Your beautiful mind and how you're so good at English. 📚
 <br>
-* **The fact that I always lose to you,** because losing to you truly feels like winning.
+* **The fact that I always lose to you...** 🏳️ because losing to you truly feels like winning anyway. 🏆 (And let's be honest, I can't win against you even if I tried! 🤡)
 <br>
-* **The fire in you when you're angry** (it's honesty).
-* **Even the way you nag**—because I know you care.
+* **The fire in you when you're angry** 🔥 (it's honesty).
+* **Even the way you nag** 🗣️ — because I know you care.
 <br>
-* **I cherish every single part of you.**
+* **I cherish every single part of you.** ❤️
 </div>
 <button class="btn" onclick="show('step5')">View Memory Album 📸</button>
 </div>
@@ -198,9 +205,9 @@ textarea{min-height:80px}
 <h2><i class="fas fa-gifts"></i> And finally...</h2>
 <div class="final-message">
   <p style="white-space:pre-wrap;color:var(--title-color);font-size:17px;font-weight:600; margin:0;">
-    **Happy Birthday, My Sweet Ruhh.**
+    **Happy Birthday, My Sweet Ruhh.** 🎂
     You possess a beautiful mind and a wit sharper than mine. 
-    Celebrating this day by your side is my favorite win.
+    Celebrating this day by your side is my favorite win. 💖
   </p>
 </div>
 <button class="btn" onclick="show('step7')">Reveal My Gift 🎁</button>
@@ -276,7 +283,7 @@ document.querySelectorAll('.gift').forEach(g => {
   g.onclick = () => {
     document.querySelectorAll('.gift').forEach(x => x.classList.add('hide'));
     g.classList.remove('hide');
-    el('result').innerHTML = `<p style="font-size:16px;"><b>Dinner Invitation ❤️</b><br>Tourist Cafe, Dalgaon Viewpoint<br>6:30 – 7:00 PM<br><br><i>(P.S. Since I invited you, the treat is on you! Fair deal?)</i></p>`;
+    el('result').innerHTML = `<p style="font-size:16px;"><b>Dinner Invitation ❤️</b><br>Tourist Cafe, Dalgaon Viewpoint<br>6:30 – 7:00 PM<br><br><i>(P.S. Since I invited you, the treat is on you! Fair deal? 😉)</i></p>`;
     confettiBurst();
   };
 });
