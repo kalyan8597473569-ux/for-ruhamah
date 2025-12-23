@@ -24,6 +24,116 @@
   50% { transform: scale(1.005); box-shadow: 0 16px 45px rgba(0,0,0,.15); } 
   100% { transform: scale(1); box-shadow: 0 15px 40px rgba(0,0,0,.12); }
 }
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+@keyframes heartFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.floating-illustration {
+    width: 240px; /* Slightly larger for better visibility */
+    height: auto;
+    animation: floatY 3s ease-in-out infinite;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.album-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding: 10px;
+}
+
+.album-item {
+  background: white;
+  padding: 8px 8px 15px 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 2px;
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+}
+
+.album-item:nth-child(even) {
+  transform: rotate(3deg);
+}
+
+.album-item:hover {
+  transform: rotate(0deg) scale(1.1);
+  z-index: 10;
+}
+
+.album-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.memory-caption {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    color: var(--accent2);
+    text-align: center;
+    line-height: 1.4;
+    padding: 0 10px;
+}
+.memory-card {
+  background: white;
+  padding: 15px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transform: rotate(-2deg); /* Gives a scrapbooked look */
+  transition: transform 0.3s ease;
+}
+
+.memory-card:nth-child(even) {
+  transform: rotate(2deg);
+}
+
+.memory-card:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.memory-img {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.memory-caption {
+  font-family: 'Dancing Script', cursive;
+  font-size: 18px;
+  color: var(--accent2);
+  text-align: center;
+}
+
+.heart-animation {
+  width: 200px;
+  display: block;
+  margin: 0 auto 15px auto;
+  animation: heartFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 5px 15px rgba(255, 105, 180, 0.4));
+}
+
+.alive-sticker {
+  width: 180px; /* Adjust size as needed */
+  margin: 0 auto;
+  display: block;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 10px 15px rgba(229, 115, 153, 0.3));
+}
 html,body{
   min-height:100%; margin:0;
   font-family:system-ui, sans-serif;
@@ -33,85 +143,46 @@ html,body{
 }
 
 .panel{
-  width: 90%; 
-  max-width: 500px; /* Increased from 400px to prevent narrow look */
+  width: 90%; max-width: 500px;
   background:var(--card);
-  border-radius:22px;
-  padding:30px;
+  border-radius:22px; padding:30px;
   text-align:center;
   display:flex; flex-direction:column; gap:18px;
-  transition: all 0.3s ease;
   animation: slideIn 0.5s ease-out;
   box-sizing: border-box;
   box-shadow: 0 20px 50px rgba(0,0,0,0.1);
 }
-
 .hidden{display:none}
-h1,h2{
-  margin:0; color:var(--title-color);
-  font-weight: 800; line-height: 1.2;
-}
+h1,h2{ margin:0; color:var(--title-color); font-weight: 800; }
 .muted{color:var(--muted);font-size:15px; line-height: 1.5;}
 .small{font-size:13px;color:var(--muted)}
 
 .btn{
   background:linear-gradient(135deg,var(--accent1),var(--accent2));
-  color:#fff; border:none;
-  padding:15px 25px; border-radius:999px;
-  font-weight:700; cursor:pointer;
-  transition:transform .2s;
-  width: fit-content; align-self: center;
-  margin-top: 10px;
+  color:#fff; border:none; padding:15px 25px; border-radius:999px;
+  font-weight:700; cursor:pointer; transition:transform .2s;
+  width: fit-content; align-self: center; margin-top: 10px;
 }
-.btn:hover{ transform:scale(1.05); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn:hover:not(:disabled){ transform:scale(1.05); }
 
 input, textarea {
-  width: 100%; padding: 14px;
-  border-radius: 12px; border: 1.5px solid #f0e0e8;
-  box-sizing: border-box; font-family: inherit; text-align: center;
-  background: #fff;
+  width: 100%; padding: 14px; border-radius: 12px; 
+  border: 1.5px solid #f0e0e8; box-sizing: border-box;
+  font-family: inherit; text-align: center; background: #fff;
 }
+textarea { min-height: 80px; resize: none; }
 
-/* PHOTO FIXES */
-.photo-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 10px 0;
-}
-.photo{
-  max-width: 100%; /* Ensures it never goes out of the border */
-  height: auto;
-  max-height: 350px;
-  border-radius: 15px;
-  object-fit: contain;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  border: 5px solid white;
-}
+.photo-container { width: 100%; display: flex; justify-content: center; padding: 10px 0; }
+.photo{ max-width: 100%; height: auto; border-radius: 15px; border: 5px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
 
-/* VIDEO BOX */
-#bdayVideo {
-  width: 100%;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  margin-bottom: 10px;
-}
+#bdayVideo { width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 10px; }
 
 .countdown{display:flex; gap:10px; justify-content:center; flex-wrap: wrap;}
-.cd{
-  background:#fff; padding:12px;
-  border-radius:14px; min-width:65px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
+.cd{ background:#fff; padding:12px; border-radius:14px; min-width:65px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 .cd div{font-size:1.5em; font-weight:bold; color:var(--accent2)}
 
-.final-message {
-  padding: 20px;
-  border: 2px dashed var(--accent1); 
-  border-radius: 15px;
-  background: #fff0f6; 
-  line-height: 1.6;
-}
+.final-message { padding: 20px; border: 2px dashed var(--accent1); border-radius: 15px; background: #fff0f6; line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -135,72 +206,110 @@ input, textarea {
 
 <div id="step1" class="panel hidden">
   <h1><i class="fas fa-key"></i> Identify Yourself</h1>
-  <p class="muted">Enter the name I call you by.</p>
   <input id="nameInput" placeholder="Enter name here...">
   <p id="nameHint" class="small"></p>
   <button id="nameBtn" class="btn">Continue</button>
 </div>
 
 <div id="step2" class="panel hidden">
+  <img src="couple.png" class="alive-sticker" alt="Cute Couple">
+  
   <h2>Hello, My Dear Ruhh <i class="fas fa-hand-sparkles"></i></h2>
-  <p class="muted">This corner of the internet belongs to you today.</p>
+  <p class="muted">I've been waiting for this day to tell you some things...</p>
   <button class="btn" onclick="show('step3')">Read My Message</button>
 </div>
 
 <div id="step3" class="panel hidden">
   <h2><i class="fas fa-envelope-open-text"></i> From My Heart...</h2>
-  <p class="muted">I wanted to take a moment to tell you how much you mean to me.</p>
+  
+  <img src="heart-drop.png" class="heart-animation" alt="Heart Drop">
+
+  <div class="final-message" style="text-align: left; font-style: italic;">
+    "I wanted to build something as unique as you. You deserve a birthday that 
+    feels like magic, and even though I’m not there to drop a heart in person 
+    like in this picture, I hope this site makes you feel how much you mean to me."
+  </div>
+
   <button class="btn" onclick="show('step4')">Continue</button>
 </div>
 
 <div id="step4" class="panel hidden">
   <h2><i class="fas fa-heart-circle-check"></i> My Favorite Things</h2>
-  <div style="white-space:pre-wrap; color:var(--title-color); font-size:16px; font-weight:600; text-align:left; padding: 10px; display:flex; flex-direction:column; gap:12px;">
-* The thoughtful way you talk. 💬
-* Your effortless laugh. 😂
-* Your sweet smile that stops me. ✨
-* Your beautiful mind. 📚
-<br>
-* **I always lose to you...** 🏳️ because losing to you feels like winning. (And let's be real, I can't win anyway! 🤡)
-  </div>
-  <button class="btn" onclick="show('step5')">View Memory Album 📸</button>
-</div>
+  <div style="white-space:pre-wrap; color:var(--title-color); font-size:15px; font-weight:600; text-align:left; padding: 10px; display:flex; flex-direction:column; gap:14px; line-height:1.6;">
+* **The way you speak:** There’s a thoughtfulness in your words that I don’t find anywhere else. I could listen to you talk for hours. 💬
 
-<div id="step5" class="panel hidden">
-  <h2><i class="fas fa-book-open"></i> Memory Album</h2>
-  <p class="muted">Just a few moments I keep close to my heart.</p>
-  <button class="btn" onclick="loadPhoto('step5a', 'birthday-photo-1.jpeg', 'My favorite view.')">See Memory 1</button>
+* **Your effortless laugh:** It’s my favorite sound in the world. It’s so natural and light, it makes everything else feel okay. 😂
+
+* **Your smile:** It’s dangerous, Ruhh. It’s the kind of sweet smile that literally stops me in my tracks every single time. ✨
+
+* **Your beautiful mind:** Beyond everything, I’m in awe of how you think. You’re so sharp, so brilliant, and let's be honest—your English is way better than mine! 📚
+
+* **The "Fire" and the "Nagging":** I even love the way you get angry, because it’s honest. And when you nag me? I don't mind it at all, because I know it comes from a place of caring about me. 🗣️🔥
+
+* **The "Losing" Streak:** I’ve realized that **I always lose to you...** 🏳️ and I’ve stopped trying to win. Because I’ve learned that in our world, "losing" to you is actually the biggest win I could ever ask for. Being second to you is my favorite place to be. 🏆❤️
+
+* **The Truth:** i can't win against you.
+  </div>
+  <button class="btn" onclick="show('step5a')">View Memory Album 📸</button>
 </div>
 
 <div id="step5a" class="panel hidden">
-  <h2>Memory 1/3</h2>
-  <div class="photo-container"><img id="photo-5a" class="photo" style="display:none"></div>
-  <p id="photoMsg-5a" class="small">Loading...</p>
-  <p id="caption-5a" class="muted"></p>
-  <button class="btn" onclick="loadPhoto('step5b', 'birthday-photo-2.jpeg', 'You looked like a total gangster here.')">Next Memory</button>
+  <h2><i class="fas fa-book-heart"></i> Our Memory Album</h2>
+  <p class="muted">A little collection of my favorite views...</p>
+  
+  <div class="album-grid">
+    <div class="album-item"><img src="memory1.png" class="album-img"></div>
+    <div class="album-item"><img src="memory2.png" class="album-img"></div>
+    <div class="album-item"><img src="memory3.png" class="album-img"></div>
+    <div class="album-item"><img src="birthday/photo1.jpg" class="album-img"></div>
+  </div>
+
+  <p class="muted" style="margin-top: 15px; font-style: italic;">Tap a memory to see it closer...</p>
+  <button class="btn" onclick="show('step5b')" style="margin-top:10px;">Open Album ✨</button>
 </div>
 
 <div id="step5b" class="panel hidden">
-  <h2>Memory 2/3</h2>
-  <div class="photo-container"><img id="photo-5b" class="photo" style="display:none"></div>
-  <p id="photoMsg-5b" class="small">Loading...</p>
-  <p id="caption-5b" class="muted"></p>
-  <button class="btn" onclick="loadPhoto('step5c', 'birthday-photo-3.jpeg', 'Just another reason I love you.')">Last Memory</button>
+  <div class="floating-container">
+    <img src="memory1.png" class="floating-illustration">
+    <div class="memory-caption">"You sleeping... I love this view. I want to see this for a lifetime 😂❤️"</div>
+  </div>
+  <button class="btn" onclick="show('step5c')" style="margin-top:20px;">Next Memory ✨</button>
 </div>
 
 <div id="step5c" class="panel hidden">
-  <h2>Memory 3/3</h2>
-  <div class="photo-container"><img id="photo-5c" class="photo" style="display:none"></div>
-  <p id="photoMsg-5c" class="small">Loading...</p>
-  <p id="caption-5c" class="muted"></p>
-  <button class="btn" onclick="show('step6')">Make a Wish!</button>
+  <div class="floating-container">
+    <img src="memory2.png" class="floating-illustration" style="animation-delay: 0.5s;">
+    <div class="memory-caption">"You lookin' kinda gangster, still love this 🎈💖"</div>
+  </div>
+  <button class="btn" onclick="show('step5d')" style="margin-top:20px;">Next Memory ✨</button>
+</div>
+
+<div id="step5d" class="panel hidden">
+  <div class="floating-container">
+    <img src="memory3.png" class="floating-illustration" style="animation-delay: 1s;">
+    <div class="memory-caption">"See how beautiful you look 📱✨"</div>
+  </div>
+  <button class="btn" onclick="show('step5e')" style="margin-top:20px;">One More... 📸</button>
+</div>
+
+<div id="step5e" class="panel hidden">
+  <h2><i class="fas fa-camera-retro"></i> Our Little Moments</h2>
+  <div class="memory-card">
+    <img src="birthday/photo1.jpg" class="memory-img">
+    <div class="memory-caption">"As beautiful as ever 📸"</div>
+  </div>
+  <button class="btn" onclick="show('step6')" style="margin-top:20px;">Next: Make a Wish 🎂</button>
 </div>
 
 <div id="step6" class="panel hidden">
   <h2><i class="fas fa-wand-magic-sparkles"></i> Your Birthday Wish</h2>
-  <textarea id="wish" placeholder="Type your wish..."></textarea>
-  <textarea id="note" placeholder="Any note for me?"></textarea>
-  <button class="btn" id="save">Save Your Wish</button>
+  <p class="muted">Make a wish, Ruhh. It stays between us. ✨</p>
+  <form id="wishForm">
+    <textarea name="Wish" id="wish" placeholder="Type your wish here..." required></textarea>
+    <textarea name="Note" id="note" placeholder="Any extra note? (Optional)"></textarea>
+    <button type="submit" class="btn" id="saveBtn">✨ Save & Unlock Surprise</button>
+  </form>
+  <p id="sendingMsg" class="small hidden">Sending wish to the stars... ✨</p>
 </div>
 
 <div id="step6_5" class="panel hidden">
@@ -218,16 +327,15 @@ input, textarea {
 
 <div id="step7" class="panel hidden">
   <h2>My Gift To You 🎁</h2>
-  <div style="display:flex; gap:10px; justify-content:center;">
-    <div class="btn" onclick="revealGift()">🎁 Open Gift</div>
-  </div>
+  <button class="btn" onclick="revealGift()">🎁 Open Gift</button>
   <div id="result" style="margin-top:15px;"></div>
 </div>
 
 <script>
 const VALID_INPUTS = ["ruhh", "ruhamah"];
 const ADMIN_PASS = "R28-OnlyForUs-2025";
-const TARGET_MONTH = 11, TARGET_DAY = 28;
+const TARGET_MONTH = 11; // December
+const TARGET_DAY = 23;
 
 const el = id => document.getElementById(id);
 const show = id => {
@@ -238,56 +346,115 @@ const show = id => {
 
 const confettiBurst = () => confetti({particleCount:150,spread:70,origin:{y:0.6}}); 
 
-function loadPhoto(stepId, filename, captionText) {
-    show(stepId);
-    const suffix = stepId.slice(4); 
-    const imgEl = el('photo-' + suffix), msgEl = el('photoMsg-' + suffix), captionEl = el('caption-' + suffix);
-    imgEl.style.display = 'none'; msgEl.style.display = 'block';
-    imgEl.src = "birthday/" + filename;
-    imgEl.onload = () => { imgEl.style.display = 'block'; msgEl.style.display = 'none'; captionEl.textContent = captionText; };
-    imgEl.onerror = () => { msgEl.textContent = "Photo error. Check folder 'birthday'"; };
+function tick() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  
+  // Create Date objects for the start of the birthday and the end of the birthday
+  const bdayStart = new Date(currentYear, TARGET_MONTH, TARGET_DAY, 0, 0, 0);
+  const bdayEnd = new Date(currentYear, TARGET_MONTH, TARGET_DAY, 23, 59, 59);
+
+  // 1. CHECK IF TODAY IS THE 28th (The Birthday Window)
+  if (now >= bdayStart && now <= bdayEnd) {
+    el('openNow').classList.remove('hidden'); 
+    el('locked').classList.add('hidden');
+    // Set display to zero
+    el('d').textContent = "0"; el('h').textContent = "0";
+    el('m').textContent = "0"; el('s').textContent = "0";
+  } 
+  else {
+    // 2. IT IS NOT THE 28th - CALCULATE COUNTDOWN
+    let targetDate = new Date(currentYear, TARGET_MONTH, TARGET_DAY);
+    
+    // If today is past the 28th, count toward next year
+    if (now > bdayEnd) {
+      targetDate.setFullYear(currentYear + 1);
+    }
+
+    const diff = Math.max(0, (targetDate - now) / 1000);
+    
+    el('d').textContent = Math.floor(diff / 86400); 
+    el('h').textContent = Math.floor(diff % 86400 / 3600);
+    el('m').textContent = Math.floor(diff % 3600 / 60); 
+    el('s').textContent = Math.floor(diff % 60);
+
+    el('openNow').classList.add('hidden');
+    el('locked').classList.remove('hidden');
+  }
 }
 
-function tick(){
-  const now = new Date(), t = new Date(now.getFullYear(), TARGET_MONTH, TARGET_DAY);
-  if (t < now) t.setFullYear(t.getFullYear() + 1);
-  const diff = Math.max(0, (t - now) / 1000);
-  el('d').textContent = Math.floor(diff / 86400); el('h').textContent = Math.floor(diff % 86400 / 3600);
-  el('m').textContent = Math.floor(diff % 3600 / 60); el('s').textContent = Math.floor(diff % 60);
-  if(now.getMonth() == TARGET_MONTH && now.getDate() == TARGET_DAY){ el('openNow').classList.remove('hidden'); el('locked').classList.add('hidden'); }
-}
-setInterval(tick, 1000); tick();
+// Run the timer every second
+setInterval(tick, 1000); 
+tick();
 
+// ADMIN SKIP LOGIC
 let adminTaps = 0;
 el('step0').addEventListener('click', () => {
   adminTaps++;
-  setTimeout(() => adminTaps = 0, 4000);
   if(adminTaps >= 7){
     if(prompt("Admin Password:") === ADMIN_PASS){ confettiBurst(); show('step1'); }
+    adminTaps = 0;
   }
 });
 
+// NAVIGATION LOGIC
 el('openNow').onclick = () => show('step1');
+
 el('nameBtn').onclick = () => {
   if(VALID_INPUTS.includes(el('nameInput').value.trim().toLowerCase())){
     confettiBurst(); show('step2');
   } else { el('nameHint').textContent = "That's not the name I use! 🧐"; }
 };
 
-el('save').onclick = () => { 
-  if(!el('wish').value) return alert("Make a wish first!");
-  el('bgMusic').play();
-  el('bdayVideo').play();
-  confettiBurst();
-  show('step6_5'); 
+function loadPhoto(stepId, filename, captionText) {
+    show(stepId);
+    const suffix = stepId.slice(4); 
+    const imgEl = el('photo-' + suffix), msgEl = el('photoMsg-' + suffix), captionEl = el('caption-' + suffix);
+    imgEl.src = "birthday/" + filename;
+    imgEl.onload = () => { imgEl.style.display = 'block'; msgEl.style.display = 'none'; captionEl.textContent = captionText; };
+}
+
+// FORMSPREE LOGIC
+el('wishForm').onsubmit = async (e) => {
+  e.preventDefault();
+  const btn = el('saveBtn');
+  btn.disabled = true; btn.innerText = "Saving...";
+  try {
+    const response = await fetch('https://formspree.io/f/xrezorbq', {
+      method: 'POST',
+      body: new FormData(el('wishForm')),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      el('bgMusic').play();
+      el('bdayVideo').play();
+      confettiBurst();
+      show('step6_5');
+    } else { throw new Error(); }
+  } catch (error) { 
+    alert("Connection error. Please try again."); 
+    btn.disabled = false; btn.innerText = "✨ Save & Unlock Surprise"; 
+  }
 };
 
 function revealGift() {
-  el('result').innerHTML = `<div class="final-message"><b>Dinner Invitation ❤️</b><br>Tourist Cafe, Dalgaon Viewpoint<br>6:30 – 7:00 PM<br><br><i>(P.S. Since I invited you, the treat is on you! Fair deal? 😉)</i></div>`;
+  el('result').innerHTML = `
+    <div class="final-message" style="text-align:left;">
+      <b style="font-size:18px; display:block; text-align:center;">The Meaning Behind the Box... 🎁</b><br>
+      
+      <p><b>The Shoulder Bag:</b> To carry all your big dreams (and maybe a few things of mine too). I'll always be here to help you carry the load. 👜</p>
+      
+      <p><b>The Hourglass:</b> A reminder that every minute with you is precious. Even 3 minutes of your time is enough to make my whole day better. ⏳</p>
+      
+      <p><b>The Hairbands:</b> Because I know they always go missing! One for now, one for later, and one just because I love you. 🎀</p>
+      
+      <hr style="border:0; border-top:1px dashed var(--accent1); margin:15px 0;">
+      
+      <p style="color:var(--accent2); font-weight:700; text-align:center;">
+        I hope these little things remind you of me whenever you use them. Happy Birthday, Ruhh! ❤️
+      </p>
+    </div>`;
   confettiBurst();
 }
-
 show('step0');
 </script>
-</body>
-</html>
