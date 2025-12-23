@@ -335,7 +335,7 @@ textarea { min-height: 80px; resize: none; }
 const VALID_INPUTS = ["ruhh", "ruhamah"];
 const ADMIN_PASS = "R28-OnlyForUs-2025";
 const TARGET_MONTH = 11; // December
-const TARGET_DAY = 23;
+const TARGET_DAY = 28;
 
 const el = id => document.getElementById(id);
 const show = id => {
@@ -352,7 +352,7 @@ function tick() {
   
   // Create Date objects for the start of the birthday and the end of the birthday
   const bdayStart = new Date(currentYear, TARGET_MONTH, TARGET_DAY, 0, 0, 0);
-  const bdayEnd = new Date(currentYear, TARGET_MONTH, TARGET_DAY, 23, 59, 59);
+  const bdayEnd = new Date(currentYear, TARGET_MONTH, TARGET_DAY, 28, 59, 59);
 
   // 1. CHECK IF TODAY IS THE 28th (The Birthday Window)
   if (now >= bdayStart && now <= bdayEnd) {
@@ -457,4 +457,5 @@ function revealGift() {
   confettiBurst();
 }
 show('step0');
+
 </script>
